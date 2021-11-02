@@ -36,14 +36,14 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
     stage('Analyze') {
       steps {
         echo 'Etapa de analisis de codigo'
-
-        withSonarQubeEnv('SonarQube') { // Will pick the global server connection you have configured
+        withSonarQubeEnv('default') {
           sh './gradlew sonarqube -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=6281939a41098fde290eb918b6e6b60df0dc5598'
         }
 
-        timeout(time: 20, unit: 'SECONDS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-          waitForQualityGate abortPipeline: true // Reuse taskId previously collected by withSonarQubeEnv
+        timeout(time: 20, unit: 'SECONDS') {
+          waitForQualityGate true
         }
+
       }
     }
 

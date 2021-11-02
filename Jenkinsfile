@@ -42,10 +42,7 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
         }
 
         timeout(time: 20, unit: 'SECONDS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-          def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-          if (qg.status != 'OK') {
-            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-          }
+          waitForQualityGate abortPipeline: true // Reuse taskId previously collected by withSonarQubeEnv
         }
       }
     }

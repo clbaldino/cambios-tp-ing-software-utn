@@ -20,6 +20,7 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
         sleep 20
         sh 'tail $WORKSPACE/server.output'
       }
+    }
 
     stage('Test') {
       steps {

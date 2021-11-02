@@ -37,7 +37,7 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
       steps {
         echo 'Etapa de analisis de codigo'
 
-        withSonarQubeEnv() { // Will pick the global server connection you have configured
+        withSonarQubeEnv('SonarQube') { // Will pick the global server connection you have configured
           sh './gradlew sonarqube -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=6281939a41098fde290eb918b6e6b60df0dc5598'
         }
 

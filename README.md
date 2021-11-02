@@ -2,25 +2,27 @@
 Just a demo repo for jenkins pipeline testing proposes
 
 
-# Buildear el proyecto (la versión de gradle debe ser menor a la 7)
+## Buildear el proyecto (la versión de gradle debe ser menor a la 7)
+```
 docker run \
   --rm \
   -u gradle \
   -v "$PWD":/home/gradle/project \
   -w /home/gradle/project \
   gradle:6.9.1-jdk11-alpine gradle build
+```
 
-
-# Comando para corregir el build en caso de error `Task :spotlessJavaCheck FAILED`
+## Comando para corregir el build en caso de error `Task :spotlessJavaCheck FAILED`
+```
 docker run \
   --rm \
   -u gradle \
   -v "$PWD":/home/gradle/project \
   -w /home/gradle/project \
   gradle:6.9.1-jdk11-alpine gradle :spotlessApply
+```
 
-a)
-# Modificaciones en archivos de gradle para usar sonarqube
+## Modificaciones en archivos de gradle para usar sonarqube
 Documentación: https://sonarqube.inria.fr/sonarqube/documentation/analysis/scan/sonarscanner-for-gradle/
 
 En `gradle.properties`:
@@ -36,7 +38,7 @@ plugins {
 }
 ```
 
-# Comando para correr sonarqube
+## Comando para correr sonarqube
 docker run \
   --rm \
   -u gradle \

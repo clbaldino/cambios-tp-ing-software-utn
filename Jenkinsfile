@@ -35,9 +35,18 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
 
     stage('Analyze') {
       steps {
-        echo 'Etapa de deploy'
-        waitForQualityGate true
-        sh './gradlew sonarqube -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=6281939a41098fde290eb918b6e6b60df0dc5598'
+        echo 'Etapa de analisis de codigo'
+
+        withSonarQubeEnv() { // Will pick the global server connection you have configured
+          sh './gradlew sonarqube -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=6281939a41098fde290eb918b6e6b60df0dc5598'
+        }
+
+        timeout(time: 20, unit: 'SECONDS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+          def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+          if (qg.status != 'OK') {
+            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+          }
+        }
       }
     }
 

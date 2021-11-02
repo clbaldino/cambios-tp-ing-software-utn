@@ -29,14 +29,21 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
 
     stage('Validate') {
       steps {
-        echo 'Sonarqube'
+        echo 'Etapa de Validacion'
+      }
+    }
+
+    stage('Analyze') {
+      steps {
+        echo 'Etapa de deploy'
+        waitForQualityGate true
         sh './gradlew sonarqube -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=6281939a41098fde290eb918b6e6b60df0dc5598'
       }
     }
 
     stage('Deploy') {
       steps {
-        echo 'Etapa de deploy'
+        echo 'Etapa de Deploy'
       }
     }
 

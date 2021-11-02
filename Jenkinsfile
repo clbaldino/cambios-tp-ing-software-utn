@@ -21,5 +21,23 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
       }
     }
 
+    stage('Test') {
+      steps {
+        sh './gradlew test'
+      }
+    }
+
+    stage('Validate') {
+      steps {
+        echo 'Etapa de validación'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        echo 'Etapa de deploy'
+      }
+    }
+
   }
 }

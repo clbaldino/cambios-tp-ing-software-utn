@@ -43,6 +43,13 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
       }
     }
 
+    stage('Coverage') {
+      steps {
+        echo 'Etapa de Covertura con Jacoco'
+        sh './gradlew -i test jacocoTestReport'
+      }
+    }
+
     stage('Deploy') {
       steps {
         echo 'Etapa de Deploy'

@@ -41,7 +41,7 @@ nohup ./gradlew bootRun > $WORKSPACE/server.output 2>&1 &'''
         }
 
         timeout(time: 20, unit: 'SECONDS') {
-          waitForQualityGate true
+          waitForQualityGate(abortPipeline: true, credentialsId: '6281939a41098fde290eb918b6e6b60df0dc5598')
         }
 
       }

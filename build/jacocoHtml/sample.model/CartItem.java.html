@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CartItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.model</a> &gt; <span class="el_source">CartItem.java</span></div><h1>CartItem.java</h1><pre class="source lang-java linenums">package sample.model;
+
+import java.io.Serializable;
+import sample.entity.Amount;
+import sample.entity.Item;
+
+<span class="fc" id="L7">public class CartItem implements Serializable {</span>
+
+  private static final long serialVersionUID = 1L;
+
+  private Item item;
+  private int quantity;
+  private boolean inStock;
+  private Amount total;
+
+  public boolean isInStock() {
+<span class="fc" id="L17">    return inStock;</span>
+  }
+
+  public void setInStock(boolean inStock) {
+<span class="fc" id="L21">    this.inStock = inStock;</span>
+<span class="fc" id="L22">  }</span>
+
+  public Amount getTotal() {
+<span class="nc" id="L25">    return total;</span>
+  }
+
+  public Item getItem() {
+<span class="fc" id="L29">    return item;</span>
+  }
+
+  public void setItem(Item item) {
+<span class="fc" id="L33">    this.item = item;</span>
+<span class="fc" id="L34">    calculateTotal();</span>
+<span class="fc" id="L35">  }</span>
+
+  public int getQuantity() {
+<span class="fc" id="L38">    return quantity;</span>
+  }
+
+  public void setQuantity(int quantity) {
+<span class="fc" id="L42">    this.quantity = quantity;</span>
+<span class="fc" id="L43">    calculateTotal();</span>
+<span class="fc" id="L44">  }</span>
+
+  public void incrementQuantity() {
+<span class="fc" id="L47">    quantity++;</span>
+<span class="fc" id="L48">    calculateTotal();</span>
+<span class="fc" id="L49">  }</span>
+
+  private void calculateTotal() {
+<span class="pc bpc" id="L52" title="2 of 4 branches missed.">    if (item != null &amp;&amp; item.getListPrice() != null) {</span>
+<span class="nc" id="L53">      total = item.getListPrice().multiply(quantity);</span>
+    } else {
+<span class="fc" id="L55">      total = null;</span>
+    }
+<span class="fc" id="L57">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

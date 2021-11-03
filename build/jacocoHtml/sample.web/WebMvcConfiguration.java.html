@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebMvcConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.web</a> &gt; <span class="el_source">WebMvcConfiguration.java</span></div><h1>WebMvcConfiguration.java</h1><pre class="source lang-java linenums">package sample.web;
+
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import sample.formatter.AmountFormatter;
+import sample.formatter.LocalDateTimeFormatter;
+
+@Configuration
+<span class="nc" id="L15">public class WebMvcConfiguration extends WebMvcConfigurerAdapter {</span>
+
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+<span class="nc" id="L19">    super.addFormatters(registry);</span>
+<span class="nc" id="L20">    registry.addFormatter(new AmountFormatter());</span>
+<span class="nc" id="L21">    registry.addFormatter(new LocalDateTimeFormatter());</span>
+<span class="nc" id="L22">  }</span>
+
+  @Bean
+  public EmbeddedServletContainerCustomizer containerCustomizer() {
+<span class="nc" id="L26">    return new ServletContainerCustomizer();</span>
+  }
+
+<span class="nc" id="L29">  protected static class ServletContainerCustomizer implements EmbeddedServletContainerCustomizer {</span>
+
+    @Override
+    public void customize(ConfigurableEmbeddedServletContainer factory) {
+<span class="nc" id="L33">      factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, &quot;/404&quot;));</span>
+<span class="nc" id="L34">    }</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

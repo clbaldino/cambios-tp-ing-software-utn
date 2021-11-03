@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.repository</a> &gt; <span class="el_source">ProductRepository.java</span></div><h1>ProductRepository.java</h1><pre class="source lang-java linenums">package sample.repository;
+
+import static org.seasar.doma.jdbc.criteria.expression.Expressions.lower;
+
+import java.util.List;
+import org.seasar.doma.jdbc.criteria.Entityql;
+import org.seasar.doma.jdbc.criteria.option.LikeOption;
+import org.springframework.stereotype.Repository;
+import sample.entity.Product;
+import sample.entity.Product_;
+
+@Repository
+public class ProductRepository {
+
+  private final Entityql entityql;
+
+<span class="nc" id="L17">  public ProductRepository(Entityql entityql) {</span>
+<span class="nc" id="L18">    this.entityql = entityql;</span>
+<span class="nc" id="L19">  }</span>
+
+  public Product selectProduct(String productId) {
+<span class="nc" id="L22">    var p = new Product_();</span>
+
+<span class="nc" id="L24">    return entityql.from(p).where(c -&gt; c.eq(p.productId, productId)).fetchOne();</span>
+  }
+
+  public List&lt;Product&gt; selectProductsByCategory(String categoryId) {
+<span class="nc" id="L28">    var p = new Product_();</span>
+
+<span class="nc" id="L30">    return entityql.from(p).where(c -&gt; c.eq(p.categoryId, categoryId)).fetch();</span>
+  }
+
+  public List&lt;Product&gt; selectProductList(List&lt;String&gt; keywords) {
+<span class="nc" id="L34">    var p = new Product_();</span>
+<span class="nc" id="L35">    return entityql</span>
+<span class="nc" id="L36">        .from(p)</span>
+<span class="nc" id="L37">        .where(</span>
+            c -&gt; {
+<span class="nc bnc" id="L39" title="All 2 branches missed.">              for (var keyword : keywords) {</span>
+<span class="nc" id="L40">                c.or(() -&gt; c.like(lower(p.name), keyword.toLowerCase(), LikeOption.infix()));</span>
+<span class="nc" id="L41">                c.or(() -&gt; c.like(lower(p.categoryId), keyword.toLowerCase(), LikeOption.infix()));</span>
+<span class="nc" id="L42">                c.or(() -&gt; c.like(lower(p.description), keyword.toLowerCase(), LikeOption.infix()));</span>
+<span class="nc" id="L43">              }</span>
+<span class="nc" id="L44">            })</span>
+<span class="nc" id="L45">        .fetch();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

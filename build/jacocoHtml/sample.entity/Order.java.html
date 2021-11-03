@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.entity</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package sample.entity;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.seasar.doma.Column;
+import org.seasar.doma.Entity;
+import org.seasar.doma.GeneratedValue;
+import org.seasar.doma.GenerationType;
+import org.seasar.doma.Id;
+import org.seasar.doma.Metamodel;
+import org.seasar.doma.SequenceGenerator;
+import org.seasar.doma.Table;
+import org.seasar.doma.Transient;
+
+@Entity(metamodel = @Metamodel)
+@Table(name = &quot;ORDERS&quot;)
+<span class="nc" id="L19">public class Order implements Serializable {</span>
+
+  private static final long serialVersionUID = 1L;
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @SequenceGenerator(sequence = &quot;ORDERS_SEQ&quot;, initialValue = 1001, allocationSize = 10)
+  private Integer orderId;
+
+  @Column(name = &quot;USERID&quot;)
+  private String username;
+
+  private LocalDateTime orderDate;
+
+  @Column(name = &quot;SHIPADDR1&quot;)
+  private String shipAddress1;
+
+  @Column(name = &quot;SHIPADDR2&quot;)
+  private String shipAddress2;
+
+  private String shipCity;
+
+  private String shipState;
+
+  private String shipZip;
+
+  private String shipCountry;
+
+  @Column(name = &quot;BILLADDR1&quot;)
+  private String billAddress1;
+
+  @Column(name = &quot;BILLADDR2&quot;)
+  private String billAddress2;
+
+  private String billCity;
+
+  private String billState;
+
+  private String billZip;
+
+  private String billCountry;
+
+  private String courier;
+
+  private Amount totalPrice;
+
+  private String billToFirstName;
+
+  private String billToLastName;
+
+  private String shipToFirstName;
+
+  private String shipToLastName;
+
+  private String creditCard;
+
+  @Column(name = &quot;EXPRDATE&quot;)
+  private String expiryDate;
+
+  private String cardType;
+
+  private String locale;
+
+<span class="nc" id="L82">  @Transient private OrderStatus orderStatus = new OrderStatus();</span>
+
+<span class="nc" id="L84">  @Transient private final List&lt;OrderLineItem&gt; lineItemList = new ArrayList&lt;&gt;();</span>
+
+  public Integer getOrderId() {
+<span class="nc" id="L87">    return orderId;</span>
+  }
+
+  public void setOrderId(Integer orderId) {
+<span class="nc" id="L91">    this.orderId = orderId;</span>
+<span class="nc" id="L92">  }</span>
+
+  public String getUsername() {
+<span class="nc" id="L95">    return username;</span>
+  }
+
+  public void setUsername(String username) {
+<span class="nc" id="L99">    this.username = username;</span>
+<span class="nc" id="L100">  }</span>
+
+  public LocalDateTime getOrderDate() {
+<span class="nc" id="L103">    return orderDate;</span>
+  }
+
+  public void setOrderDate(LocalDateTime orderDate) {
+<span class="nc" id="L107">    this.orderDate = orderDate;</span>
+<span class="nc" id="L108">    orderStatus.setTimestamp(orderDate.toLocalDate());</span>
+<span class="nc" id="L109">  }</span>
+
+  public String getShipAddress1() {
+<span class="nc" id="L112">    return shipAddress1;</span>
+  }
+
+  public void setShipAddress1(String shipAddress1) {
+<span class="nc" id="L116">    this.shipAddress1 = shipAddress1;</span>
+<span class="nc" id="L117">  }</span>
+
+  public String getShipAddress2() {
+<span class="nc" id="L120">    return shipAddress2;</span>
+  }
+
+  public void setShipAddress2(String shipAddress2) {
+<span class="nc" id="L124">    this.shipAddress2 = shipAddress2;</span>
+<span class="nc" id="L125">  }</span>
+
+  public String getShipCity() {
+<span class="nc" id="L128">    return shipCity;</span>
+  }
+
+  public void setShipCity(String shipCity) {
+<span class="nc" id="L132">    this.shipCity = shipCity;</span>
+<span class="nc" id="L133">  }</span>
+
+  public String getShipState() {
+<span class="nc" id="L136">    return shipState;</span>
+  }
+
+  public void setShipState(String shipState) {
+<span class="nc" id="L140">    this.shipState = shipState;</span>
+<span class="nc" id="L141">  }</span>
+
+  public String getShipZip() {
+<span class="nc" id="L144">    return shipZip;</span>
+  }
+
+  public void setShipZip(String shipZip) {
+<span class="nc" id="L148">    this.shipZip = shipZip;</span>
+<span class="nc" id="L149">  }</span>
+
+  public String getShipCountry() {
+<span class="nc" id="L152">    return shipCountry;</span>
+  }
+
+  public void setShipCountry(String shipCountry) {
+<span class="nc" id="L156">    this.shipCountry = shipCountry;</span>
+<span class="nc" id="L157">  }</span>
+
+  public String getBillAddress1() {
+<span class="nc" id="L160">    return billAddress1;</span>
+  }
+
+  public void setBillAddress1(String billAddress1) {
+<span class="nc" id="L164">    this.billAddress1 = billAddress1;</span>
+<span class="nc" id="L165">  }</span>
+
+  public String getBillAddress2() {
+<span class="nc" id="L168">    return billAddress2;</span>
+  }
+
+  public void setBillAddress2(String billAddress2) {
+<span class="nc" id="L172">    this.billAddress2 = billAddress2;</span>
+<span class="nc" id="L173">  }</span>
+
+  public String getBillCity() {
+<span class="nc" id="L176">    return billCity;</span>
+  }
+
+  public void setBillCity(String billCity) {
+<span class="nc" id="L180">    this.billCity = billCity;</span>
+<span class="nc" id="L181">  }</span>
+
+  public String getBillState() {
+<span class="nc" id="L184">    return billState;</span>
+  }
+
+  public void setBillState(String billState) {
+<span class="nc" id="L188">    this.billState = billState;</span>
+<span class="nc" id="L189">  }</span>
+
+  public String getBillZip() {
+<span class="nc" id="L192">    return billZip;</span>
+  }
+
+  public void setBillZip(String billZip) {
+<span class="nc" id="L196">    this.billZip = billZip;</span>
+<span class="nc" id="L197">  }</span>
+
+  public String getBillCountry() {
+<span class="nc" id="L200">    return billCountry;</span>
+  }
+
+  public void setBillCountry(String billCountry) {
+<span class="nc" id="L204">    this.billCountry = billCountry;</span>
+<span class="nc" id="L205">  }</span>
+
+  public String getCourier() {
+<span class="nc" id="L208">    return courier;</span>
+  }
+
+  public void setCourier(String courier) {
+<span class="nc" id="L212">    this.courier = courier;</span>
+<span class="nc" id="L213">  }</span>
+
+  public Amount getTotalPrice() {
+<span class="nc" id="L216">    return totalPrice;</span>
+  }
+
+  public void setTotalPrice(Amount totalPrice) {
+<span class="nc" id="L220">    this.totalPrice = totalPrice;</span>
+<span class="nc" id="L221">  }</span>
+
+  public String getBillToFirstName() {
+<span class="nc" id="L224">    return billToFirstName;</span>
+  }
+
+  public void setBillToFirstName(String billToFirstName) {
+<span class="nc" id="L228">    this.billToFirstName = billToFirstName;</span>
+<span class="nc" id="L229">  }</span>
+
+  public String getBillToLastName() {
+<span class="nc" id="L232">    return billToLastName;</span>
+  }
+
+  public void setBillToLastName(String billToLastName) {
+<span class="nc" id="L236">    this.billToLastName = billToLastName;</span>
+<span class="nc" id="L237">  }</span>
+
+  public String getShipToFirstName() {
+<span class="nc" id="L240">    return shipToFirstName;</span>
+  }
+
+  public void setShipToFirstName(String shipToFirstName) {
+<span class="nc" id="L244">    this.shipToFirstName = shipToFirstName;</span>
+<span class="nc" id="L245">  }</span>
+
+  public String getShipToLastName() {
+<span class="nc" id="L248">    return shipToLastName;</span>
+  }
+
+  public void setShipToLastName(String shipToLastName) {
+<span class="nc" id="L252">    this.shipToLastName = shipToLastName;</span>
+<span class="nc" id="L253">  }</span>
+
+  public String getCreditCard() {
+<span class="nc" id="L256">    return creditCard;</span>
+  }
+
+  public void setCreditCard(String creditCard) {
+<span class="nc" id="L260">    this.creditCard = creditCard;</span>
+<span class="nc" id="L261">  }</span>
+
+  public String getExpiryDate() {
+<span class="nc" id="L264">    return expiryDate;</span>
+  }
+
+  public void setExpiryDate(String expiryDate) {
+<span class="nc" id="L268">    this.expiryDate = expiryDate;</span>
+<span class="nc" id="L269">  }</span>
+
+  public String getCardType() {
+<span class="nc" id="L272">    return cardType;</span>
+  }
+
+  public void setCardType(String cardType) {
+<span class="nc" id="L276">    this.cardType = cardType;</span>
+<span class="nc" id="L277">  }</span>
+
+  public String getLocale() {
+<span class="nc" id="L280">    return locale;</span>
+  }
+
+  public void setLocale(String locale) {
+<span class="nc" id="L284">    this.locale = locale;</span>
+<span class="nc" id="L285">  }</span>
+
+  public String getStatus() {
+<span class="nc" id="L288">    return orderStatus.getStatus();</span>
+  }
+
+  public void setStatus(String status) {
+<span class="nc" id="L292">    orderStatus.setStatus(status);</span>
+<span class="nc" id="L293">  }</span>
+
+  public OrderStatus getOrderStatus() {
+<span class="nc" id="L296">    orderStatus.setOrderId(orderId);</span>
+<span class="nc" id="L297">    orderStatus.setLineNumber(orderId);</span>
+<span class="nc" id="L298">    return orderStatus;</span>
+  }
+
+  public void setOrderStatus(OrderStatus orderStatus) {
+<span class="nc" id="L302">    this.orderStatus = orderStatus;</span>
+<span class="nc" id="L303">  }</span>
+
+  public void addLineItem(OrderLineItem lineItem) {
+<span class="nc" id="L306">    lineItemList.add(lineItem);</span>
+<span class="nc" id="L307">  }</span>
+
+  public List&lt;OrderLineItem&gt; getLineItemList() {
+<span class="nc" id="L310">    lineItemList.forEach(it -&gt; it.setOrderId(getOrderId()));</span>
+<span class="nc" id="L311">    return lineItemList;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

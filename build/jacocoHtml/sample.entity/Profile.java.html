@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Profile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.entity</a> &gt; <span class="el_source">Profile.java</span></div><h1>Profile.java</h1><pre class="source lang-java linenums">package sample.entity;
+
+import java.io.Serializable;
+import org.seasar.doma.Column;
+import org.seasar.doma.Entity;
+import org.seasar.doma.Id;
+import org.seasar.doma.Metamodel;
+
+@Entity(metamodel = @Metamodel)
+<span class="nc" id="L10">public class Profile implements Serializable {</span>
+
+  private static final long serialVersionUID = 1L;
+
+  @Id
+  @Column(name = &quot;USERID&quot;)
+  private String username;
+
+  @Column(name = &quot;FAVCATEGORY&quot;)
+  private String favouriteCategoryId;
+
+  @Column(name = &quot;LANGPREF&quot;)
+  private String languagePreference;
+
+  @Column(name = &quot;MYLISTOPT&quot;)
+  private boolean listOption;
+
+  @Column(name = &quot;BANNEROPT&quot;)
+  private boolean bannerOption;
+
+  @Override
+  public String toString() {
+<span class="nc" id="L32">    return &quot;Profile [username=&quot;</span>
+        + username
+        + &quot;, favouriteCategoryId=&quot;
+        + favouriteCategoryId
+        + &quot;, languagePreference=&quot;
+        + languagePreference
+        + &quot;, listOption=&quot;
+        + listOption
+        + &quot;, bannerOption=&quot;
+        + bannerOption
+        + &quot;]&quot;;
+  }
+
+  public String getUsername() {
+<span class="nc" id="L46">    return username;</span>
+  }
+
+  public void setUsername(String username) {
+<span class="nc" id="L50">    this.username = username;</span>
+<span class="nc" id="L51">  }</span>
+
+  public String getFavouriteCategoryId() {
+<span class="nc" id="L54">    return favouriteCategoryId;</span>
+  }
+
+  public void setFavouriteCategoryId(String favouriteCategoryId) {
+<span class="nc" id="L58">    this.favouriteCategoryId = favouriteCategoryId;</span>
+<span class="nc" id="L59">  }</span>
+
+  public String getLanguagePreference() {
+<span class="nc" id="L62">    return languagePreference;</span>
+  }
+
+  public void setLanguagePreference(String languagePreference) {
+<span class="nc" id="L66">    this.languagePreference = languagePreference;</span>
+<span class="nc" id="L67">  }</span>
+
+  public boolean isListOption() {
+<span class="nc" id="L70">    return listOption;</span>
+  }
+
+  public void setListOption(boolean listOption) {
+<span class="nc" id="L74">    this.listOption = listOption;</span>
+<span class="nc" id="L75">  }</span>
+
+  public boolean isBannerOption() {
+<span class="nc" id="L78">    return bannerOption;</span>
+  }
+
+  public void setBannerOption(boolean bannerOption) {
+<span class="nc" id="L82">    this.bannerOption = bannerOption;</span>
+<span class="nc" id="L83">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

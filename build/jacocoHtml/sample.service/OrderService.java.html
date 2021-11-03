@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.service</a> &gt; <span class="el_source">OrderService.java</span></div><h1>OrderService.java</h1><pre class="source lang-java linenums">package sample.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import org.springframework.stereotype.Service;
+import sample.entity.Order;
+import sample.entity.OrderLineItem;
+import sample.model.Cart;
+import sample.repository.AccountRepository;
+import sample.repository.ItemRepository;
+import sample.repository.OrderRepository;
+
+@Service
+public class OrderService {
+
+  private final ItemRepository itemRepository;
+  private final OrderRepository orderRepository;
+  private final AccountRepository accountRepository;
+
+  public OrderService(
+      ItemRepository itemRepository,
+      OrderRepository orderRepository,
+<span class="nc" id="L23">      AccountRepository accountRepository) {</span>
+<span class="nc" id="L24">    this.itemRepository = itemRepository;</span>
+<span class="nc" id="L25">    this.orderRepository = orderRepository;</span>
+<span class="nc" id="L26">    this.accountRepository = accountRepository;</span>
+<span class="nc" id="L27">  }</span>
+
+  public void insertOrder(Order order) {
+<span class="nc bnc" id="L30" title="All 2 branches missed.">    for (var lineItem : order.getLineItemList()) {</span>
+<span class="nc" id="L31">      itemRepository.updateInventoryQuantity(lineItem.getItemId(), lineItem.getQuantity());</span>
+<span class="nc" id="L32">    }</span>
+<span class="nc" id="L33">    orderRepository.insertOrder(order);</span>
+<span class="nc" id="L34">  }</span>
+
+  public Order getOrder(int orderId) {
+<span class="nc" id="L37">    return orderRepository.selectOrder(orderId);</span>
+  }
+
+  public List&lt;Order&gt; getOrdersByUsername(String username) {
+<span class="nc" id="L41">    return orderRepository.selectOrdersByUsername(username);</span>
+  }
+
+  public Order createNewOrder(String username, Cart cart) {
+<span class="nc" id="L45">    var account = accountRepository.selectAccountByUsername(username);</span>
+
+<span class="nc" id="L47">    var order = new Order();</span>
+<span class="nc" id="L48">    order.setUsername(account.getUsername());</span>
+<span class="nc" id="L49">    order.setOrderDate(LocalDateTime.now());</span>
+<span class="nc" id="L50">    order.setShipToFirstName(account.getFirstName());</span>
+<span class="nc" id="L51">    order.setShipToLastName(account.getLastName());</span>
+<span class="nc" id="L52">    order.setShipAddress1(account.getAddress1());</span>
+<span class="nc" id="L53">    order.setShipAddress2(account.getAddress2());</span>
+<span class="nc" id="L54">    order.setShipCity(account.getCity());</span>
+<span class="nc" id="L55">    order.setShipState(account.getState());</span>
+<span class="nc" id="L56">    order.setShipZip(account.getZip());</span>
+<span class="nc" id="L57">    order.setShipCountry(account.getCountry());</span>
+<span class="nc" id="L58">    order.setBillToFirstName(account.getFirstName());</span>
+<span class="nc" id="L59">    order.setBillToLastName(account.getLastName());</span>
+<span class="nc" id="L60">    order.setBillAddress1(account.getAddress1());</span>
+<span class="nc" id="L61">    order.setBillAddress2(account.getAddress2());</span>
+<span class="nc" id="L62">    order.setBillCity(account.getCity());</span>
+<span class="nc" id="L63">    order.setBillState(account.getState());</span>
+<span class="nc" id="L64">    order.setBillZip(account.getZip());</span>
+<span class="nc" id="L65">    order.setBillCountry(account.getCountry());</span>
+<span class="nc" id="L66">    order.setTotalPrice(cart.getSubTotal());</span>
+<span class="nc" id="L67">    order.setCreditCard(&quot;999 9999 9999 9999&quot;);</span>
+<span class="nc" id="L68">    order.setExpiryDate(&quot;12/03&quot;);</span>
+<span class="nc" id="L69">    order.setCardType(&quot;Visa&quot;);</span>
+<span class="nc" id="L70">    order.setCourier(&quot;UPS&quot;);</span>
+<span class="nc" id="L71">    order.setLocale(&quot;CA&quot;);</span>
+<span class="nc" id="L72">    order.setStatus(&quot;P&quot;);</span>
+
+<span class="nc" id="L74">    var i = 0;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">    for (var cartItem : cart.getCartItemList()) {</span>
+<span class="nc" id="L76">      var lineItem = new OrderLineItem();</span>
+<span class="nc" id="L77">      lineItem.setLineNumber(++i);</span>
+<span class="nc" id="L78">      lineItem.setQuantity(cartItem.getQuantity());</span>
+<span class="nc" id="L79">      lineItem.setItemId(cartItem.getItem().getItemId());</span>
+<span class="nc" id="L80">      lineItem.setUnitPrice(cartItem.getItem().getListPrice());</span>
+<span class="nc" id="L81">      order.addLineItem(lineItem);</span>
+<span class="nc" id="L82">    }</span>
+
+<span class="nc" id="L84">    return order;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

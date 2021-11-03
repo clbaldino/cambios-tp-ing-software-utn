@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.java.model.ShoppingCartTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-02T21:21:23" hostname="thinkpad" time="0.056">
+<testsuite name="test.java.model.ShoppingCartTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-03T00:10:57" hostname="thinkpad" time="0.216">
   <properties/>
-  <testcase name="addOneItem()" classname="test.java.model.ShoppingCartTest" time="0.056"/>
+  <testcase name="addOneItem()" classname="test.java.model.ShoppingCartTest" time="0.216"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

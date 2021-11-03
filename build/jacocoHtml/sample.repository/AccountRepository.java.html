@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.repository</a> &gt; <span class="el_source">AccountRepository.java</span></div><h1>AccountRepository.java</h1><pre class="source lang-java linenums">package sample.repository;
+
+import org.seasar.doma.jdbc.SqlLogType;
+import org.seasar.doma.jdbc.criteria.Entityql;
+import org.springframework.stereotype.Repository;
+import sample.entity.Account;
+import sample.entity.Account_;
+import sample.entity.BannerData_;
+import sample.entity.Profile_;
+import sample.entity.Signon_;
+
+@Repository
+public class AccountRepository {
+
+  private final Entityql entityql;
+
+<span class="nc" id="L17">  public AccountRepository(Entityql entityql) {</span>
+<span class="nc" id="L18">    this.entityql = entityql;</span>
+<span class="nc" id="L19">  }</span>
+
+  public Account selectAccountByUsername(String username) {
+<span class="nc" id="L22">    var a = new Account_();</span>
+<span class="nc" id="L23">    var p = new Profile_();</span>
+<span class="nc" id="L24">    var s = new Signon_();</span>
+<span class="nc" id="L25">    var b = new BannerData_();</span>
+
+<span class="nc" id="L27">    return entityql</span>
+<span class="nc" id="L28">        .from(a)</span>
+<span class="nc" id="L29">        .innerJoin(p, on -&gt; on.eq(a.username, p.username))</span>
+<span class="nc" id="L30">        .innerJoin(s, on -&gt; on.eq(a.username, s.username))</span>
+<span class="nc" id="L31">        .innerJoin(b, on -&gt; on.eq(p.favouriteCategoryId, b.favouriteCategoryId))</span>
+<span class="nc" id="L32">        .where(c -&gt; c.eq(a.username, username))</span>
+<span class="nc" id="L33">        .associate(a, p, Account::setProfile)</span>
+<span class="nc" id="L34">        .associate(a, s, Account::setSignon)</span>
+<span class="nc" id="L35">        .associate(a, b, Account::setBannerData)</span>
+<span class="nc" id="L36">        .fetchOne();</span>
+  }
+
+  public void insertAccount(Account account) {
+<span class="nc" id="L40">    var a = new Account_();</span>
+<span class="nc" id="L41">    var p = new Profile_();</span>
+<span class="nc" id="L42">    var s = new Signon_();</span>
+
+<span class="nc" id="L44">    entityql.insert(a, account).execute();</span>
+
+<span class="nc" id="L46">    entityql.insert(p, account.getProfile()).execute();</span>
+
+<span class="nc" id="L48">    entityql</span>
+<span class="nc" id="L49">        .insert(s, account.getSignon(), settings -&gt; settings.setSqlLogType(SqlLogType.RAW))</span>
+<span class="nc" id="L50">        .execute();</span>
+<span class="nc" id="L51">  }</span>
+
+  public void updateAccount(Account account) {
+<span class="nc" id="L54">    var a = new Account_();</span>
+<span class="nc" id="L55">    var p = new Profile_();</span>
+<span class="nc" id="L56">    var s = new Signon_();</span>
+
+<span class="nc" id="L58">    entityql.update(a, account).execute();</span>
+
+<span class="nc" id="L60">    entityql.update(p, account.getProfile()).execute();</span>
+
+<span class="nc" id="L62">    var signon = account.getSignon();</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">    if (signon.getPassword() != null &amp;&amp; signon.getPassword().length() &gt; 0) {</span>
+<span class="nc" id="L64">      entityql.update(s, signon, settings -&gt; settings.setSqlLogType(SqlLogType.RAW)).execute();</span>
+    }
+<span class="nc" id="L66">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

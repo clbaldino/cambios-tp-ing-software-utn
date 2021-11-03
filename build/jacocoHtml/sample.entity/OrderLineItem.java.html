@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderLineItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.entity</a> &gt; <span class="el_source">OrderLineItem.java</span></div><h1>OrderLineItem.java</h1><pre class="source lang-java linenums">package sample.entity;
+
+import java.io.Serializable;
+import org.seasar.doma.Column;
+import org.seasar.doma.Entity;
+import org.seasar.doma.Id;
+import org.seasar.doma.Metamodel;
+import org.seasar.doma.Table;
+import org.seasar.doma.Transient;
+
+@Entity(metamodel = @Metamodel)
+@Table(name = &quot;LINEITEM&quot;)
+<span class="nc" id="L13">public class OrderLineItem implements Serializable {</span>
+
+  private static final long serialVersionUID = 1L;
+
+  @Id private Integer orderId;
+
+  @Id
+  @Column(name = &quot;LINENUM&quot;)
+  private int lineNumber;
+
+  private int quantity;
+
+  private String itemId;
+
+  private Amount unitPrice;
+
+<span class="nc" id="L29">  @Transient private Item item = new Item();</span>
+
+  public Integer getOrderId() {
+<span class="nc" id="L32">    return orderId;</span>
+  }
+
+  public void setOrderId(Integer orderId) {
+<span class="nc" id="L36">    this.orderId = orderId;</span>
+<span class="nc" id="L37">  }</span>
+
+  public int getLineNumber() {
+<span class="nc" id="L40">    return lineNumber;</span>
+  }
+
+  public void setLineNumber(int lineNumber) {
+<span class="nc" id="L44">    this.lineNumber = lineNumber;</span>
+<span class="nc" id="L45">  }</span>
+
+  public int getQuantity() {
+<span class="nc" id="L48">    return quantity;</span>
+  }
+
+  public void setQuantity(int quantity) {
+<span class="nc" id="L52">    this.quantity = quantity;</span>
+<span class="nc" id="L53">  }</span>
+
+  public String getItemId() {
+<span class="nc" id="L56">    return itemId;</span>
+  }
+
+  public void setItemId(String itemId) {
+<span class="nc" id="L60">    this.itemId = itemId;</span>
+<span class="nc" id="L61">  }</span>
+
+  public Amount getUnitPrice() {
+<span class="nc" id="L64">    return unitPrice;</span>
+  }
+
+  public void setUnitPrice(Amount unitPrice) {
+<span class="nc" id="L68">    this.unitPrice = unitPrice;</span>
+<span class="nc" id="L69">  }</span>
+
+  public Amount getListPrice() {
+<span class="nc" id="L72">    return item.getListPrice();</span>
+  }
+
+  public String getProductName() {
+<span class="nc" id="L76">    return item.getProductName();</span>
+  }
+
+  public String getAttribute1() {
+<span class="nc" id="L80">    return item.getAttribute1();</span>
+  }
+
+  public String getAttribute2() {
+<span class="nc" id="L84">    return item.getAttribute2();</span>
+  }
+
+  public String getAttribute3() {
+<span class="nc" id="L88">    return item.getAttribute3();</span>
+  }
+
+  public String getAttribute4() {
+<span class="nc" id="L92">    return item.getAttribute4();</span>
+  }
+
+  public String getAttribute5() {
+<span class="nc" id="L96">    return item.getAttribute5();</span>
+  }
+
+  public Amount getTotal() {
+<span class="nc" id="L100">    return getListPrice().multiply(quantity);</span>
+  }
+
+  public Item getItem() {
+<span class="nc" id="L104">    return item;</span>
+  }
+
+  public void setItem(Item item) {
+<span class="nc" id="L108">    this.item = item;</span>
+<span class="nc" id="L109">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

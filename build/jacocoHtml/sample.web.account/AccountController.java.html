@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.web.account</a> &gt; <span class="el_source">AccountController.java</span></div><h1>AccountController.java</h1><pre class="source lang-java linenums">package sample.web.account;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import sample.entity.Account;
+import sample.service.AccountService;
+import sample.web.Constants;
+
+@Controller
+@RequestMapping(&quot;/account&quot;)
+@Transactional
+public class AccountController {
+
+  private final AccountService accountService;
+  private final PasswordEncoder passwordEncoder;
+  private final PasswordValidator passwordValidator;
+
+  public AccountController(
+      AccountService accountService,
+      PasswordEncoder passwordEncoder,
+<span class="nc" id="L33">      PasswordValidator passwordValidator) {</span>
+<span class="nc" id="L34">    this.accountService = accountService;</span>
+<span class="nc" id="L35">    this.passwordEncoder = passwordEncoder;</span>
+<span class="nc" id="L36">    this.passwordValidator = passwordValidator;</span>
+<span class="nc" id="L37">  }</span>
+
+  @InitBinder(&quot;addAccountForm&quot;)
+  public void initBinder(WebDataBinder binder) {
+<span class="nc" id="L41">    binder.addValidators(passwordValidator);</span>
+<span class="nc" id="L42">  }</span>
+
+  @GetMapping(&quot;add&quot;)
+  public String add(Model model) {
+<span class="nc" id="L46">    return modelAndViewForAdd(model, new AddAccountForm());</span>
+  }
+
+  @PostMapping(&quot;add&quot;)
+  public String add(
+      @Validated AddAccountForm accountForm, BindingResult bindingResult, Model model) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">    if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L53">      return modelAndViewForAdd(model, accountForm);</span>
+    }
+<span class="nc" id="L55">    var account = new Account();</span>
+<span class="nc" id="L56">    BeanUtils.copyProperties(accountForm, account);</span>
+<span class="nc" id="L57">    var rawPassword = accountForm.getPassword();</span>
+<span class="nc" id="L58">    var encodedPassword = passwordEncoder.encode(rawPassword);</span>
+<span class="nc" id="L59">    account.setPassword(encodedPassword);</span>
+<span class="nc" id="L60">    accountService.insertAccount(account);</span>
+<span class="nc" id="L61">    return &quot;redirect:/signin&quot;;</span>
+  }
+
+  private String modelAndViewForAdd(Model model, AddAccountForm accountForm) {
+<span class="nc" id="L65">    model.addAttribute(accountForm);</span>
+<span class="nc" id="L66">    model.addAttribute(&quot;languageList&quot;, Constants.LANGUAGE_LIST);</span>
+<span class="nc" id="L67">    model.addAttribute(&quot;categoryList&quot;, Constants.CATEGORY_LIST);</span>
+<span class="nc" id="L68">    return &quot;account/add&quot;;</span>
+  }
+
+  @GetMapping(&quot;/edit&quot;)
+  public String edit(Model model, @AuthenticationPrincipal User user) {
+<span class="nc" id="L73">    var account = accountService.getAccount(user.getUsername());</span>
+<span class="nc" id="L74">    var accountForm = new EditAccountForm();</span>
+<span class="nc" id="L75">    BeanUtils.copyProperties(account, accountForm, &quot;password&quot;);</span>
+<span class="nc" id="L76">    return modelAndViewForEdit(model, accountForm, user);</span>
+  }
+
+  @PostMapping(&quot;/edit&quot;)
+  public String edit(
+      @Validated EditAccountForm accountForm,
+      BindingResult bindingResult,
+      Model model,
+      @AuthenticationPrincipal User user) {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">    if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L86">      return modelAndViewForEdit(model, accountForm, user);</span>
+    }
+<span class="nc" id="L88">    var account = accountService.getAccount(user.getUsername());</span>
+<span class="nc" id="L89">    BeanUtils.copyProperties(accountForm, account);</span>
+<span class="nc" id="L90">    account.setUsername(user.getUsername());</span>
+<span class="nc" id="L91">    accountService.updateAccount(account);</span>
+<span class="nc" id="L92">    return &quot;redirect:/&quot;;</span>
+  }
+
+  private String modelAndViewForEdit(Model model, EditAccountForm accountForm, User user) {
+<span class="nc" id="L96">    model.addAttribute(accountForm);</span>
+<span class="nc" id="L97">    model.addAttribute(&quot;username&quot;, user.getUsername());</span>
+<span class="nc" id="L98">    model.addAttribute(&quot;languageList&quot;, Constants.LANGUAGE_LIST);</span>
+<span class="nc" id="L99">    model.addAttribute(&quot;categoryList&quot;, Constants.CATEGORY_LIST);</span>
+<span class="nc" id="L100">    return &quot;account/edit&quot;;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

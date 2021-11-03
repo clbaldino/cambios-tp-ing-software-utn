@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmountFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.formatter</a> &gt; <span class="el_source">AmountFormatter.java</span></div><h1>AmountFormatter.java</h1><pre class="source lang-java linenums">package sample.formatter;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.Locale;
+import org.springframework.format.Formatter;
+import org.springframework.format.number.NumberStyleFormatter;
+import sample.entity.Amount;
+
+public class AmountFormatter implements Formatter&lt;Amount&gt; {
+
+  private final NumberStyleFormatter formatter;
+
+<span class="nc" id="L14">  public AmountFormatter() {</span>
+<span class="nc" id="L15">    formatter = new NumberStyleFormatter(&quot;$#,##0.00&quot;);</span>
+<span class="nc" id="L16">  }</span>
+
+  @Override
+  public String print(Amount amount, Locale locale) {
+<span class="nc" id="L20">    return formatter.print(amount.getValue(), locale);</span>
+  }
+
+  @Override
+  public Amount parse(String text, Locale locale) throws ParseException {
+<span class="nc" id="L25">    var value = (BigDecimal) formatter.parse(text, locale);</span>
+<span class="nc" id="L26">    return new Amount(value);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

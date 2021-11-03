@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Item.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cambios-tp-ing-software-utn</a> &gt; <a href="index.source.html" class="el_package">sample.entity</a> &gt; <span class="el_source">Item.java</span></div><h1>Item.java</h1><pre class="source lang-java linenums">package sample.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import org.seasar.doma.Column;
+import org.seasar.doma.Entity;
+import org.seasar.doma.Id;
+import org.seasar.doma.Metamodel;
+import org.seasar.doma.Transient;
+
+@Entity(metamodel = @Metamodel)
+<span class="fc" id="L12">public class Item implements Serializable {</span>
+
+  private static final long serialVersionUID = 1L;
+
+  @Id private String itemId;
+
+  @Column(name = &quot;PRODUCTID&quot;)
+  private String productId;
+
+  private Amount listPrice;
+
+  private BigDecimal unitCost;
+
+  @Column(name = &quot;SUPPLIER&quot;)
+  private int supplierId;
+
+  private String status;
+
+  @Column(name = &quot;ATTR1&quot;)
+  private String attribute1;
+
+  @Column(name = &quot;ATTR2&quot;)
+  private String attribute2;
+
+  @Column(name = &quot;ATTR3&quot;)
+  private String attribute3;
+
+  @Column(name = &quot;ATTR4&quot;)
+  private String attribute4;
+
+  @Column(name = &quot;ATTR5&quot;)
+  private String attribute5;
+
+<span class="fc" id="L45">  @Transient private Inventory inventory = new Inventory();</span>
+
+<span class="fc" id="L47">  @Transient private Product product = new Product();</span>
+
+  public String getItemId() {
+<span class="fc" id="L50">    return itemId;</span>
+  }
+
+  public void setItemId(String itemId) {
+<span class="fc" id="L54">    this.itemId = itemId;</span>
+<span class="fc" id="L55">  }</span>
+
+  public String getProductId() {
+<span class="fc" id="L58">    return productId;</span>
+  }
+
+  public void setProductId(String productId) {
+<span class="fc" id="L62">    this.productId = productId;</span>
+<span class="fc" id="L63">  }</span>
+
+  public String getProductName() {
+<span class="nc" id="L66">    return product.getName();</span>
+  }
+
+  public void setProductName(String productName) {
+<span class="fc" id="L70">    product.setName(productName);</span>
+<span class="fc" id="L71">  }</span>
+
+  public String getProductCategoryId() {
+<span class="nc" id="L74">    return product.getCategoryId();</span>
+  }
+
+  public void setProductCategoryId(String productCategoryId) {
+<span class="nc" id="L78">    product.setCategoryId(productCategoryId);</span>
+<span class="nc" id="L79">  }</span>
+
+  public String getProductDescription() {
+<span class="nc" id="L82">    return product.getDescription();</span>
+  }
+
+  public void setProductDescription(String productDescription) {
+<span class="nc" id="L86">    product.setDescription(productDescription);</span>
+<span class="nc" id="L87">  }</span>
+
+  public Amount getListPrice() {
+<span class="fc" id="L90">    return listPrice;</span>
+  }
+
+  public void setListPrice(Amount listPrice) {
+<span class="nc" id="L94">    this.listPrice = listPrice;</span>
+<span class="nc" id="L95">  }</span>
+
+  public BigDecimal getUnitCost() {
+<span class="nc" id="L98">    return unitCost;</span>
+  }
+
+  public void setUnitCost(BigDecimal unitCost) {
+<span class="nc" id="L102">    this.unitCost = unitCost;</span>
+<span class="nc" id="L103">  }</span>
+
+  public int getSupplierId() {
+<span class="nc" id="L106">    return supplierId;</span>
+  }
+
+  public void setSupplierId(int supplierId) {
+<span class="nc" id="L110">    this.supplierId = supplierId;</span>
+<span class="nc" id="L111">  }</span>
+
+  public String getStatus() {
+<span class="nc" id="L114">    return status;</span>
+  }
+
+  public void setStatus(String status) {
+<span class="nc" id="L118">    this.status = status;</span>
+<span class="nc" id="L119">  }</span>
+
+  public String getAttribute1() {
+<span class="nc" id="L122">    return attribute1;</span>
+  }
+
+  public void setAttribute1(String attribute1) {
+<span class="nc" id="L126">    this.attribute1 = attribute1;</span>
+<span class="nc" id="L127">  }</span>
+
+  public String getAttribute2() {
+<span class="nc" id="L130">    return attribute2;</span>
+  }
+
+  public void setAttribute2(String attribute2) {
+<span class="nc" id="L134">    this.attribute2 = attribute2;</span>
+<span class="nc" id="L135">  }</span>
+
+  public String getAttribute3() {
+<span class="nc" id="L138">    return attribute3;</span>
+  }
+
+  public void setAttribute3(String attribute3) {
+<span class="nc" id="L142">    this.attribute3 = attribute3;</span>
+<span class="nc" id="L143">  }</span>
+
+  public String getAttribute4() {
+<span class="nc" id="L146">    return attribute4;</span>
+  }
+
+  public void setAttribute4(String attribute4) {
+<span class="nc" id="L150">    this.attribute4 = attribute4;</span>
+<span class="nc" id="L151">  }</span>
+
+  public String getAttribute5() {
+<span class="nc" id="L154">    return attribute5;</span>
+  }
+
+  public void setAttribute5(String attribute5) {
+<span class="nc" id="L158">    this.attribute5 = attribute5;</span>
+<span class="nc" id="L159">  }</span>
+
+  public Integer getQuantity() {
+<span class="fc" id="L162">    return inventory.getQuantity();</span>
+  }
+
+  public void setQuantity(Integer quantity) {
+<span class="fc" id="L166">    inventory.setQuantity(quantity);</span>
+<span class="fc" id="L167">  }</span>
+
+  public Inventory getInventory() {
+<span class="nc" id="L170">    return inventory;</span>
+  }
+
+  public void setInventory(Inventory inventory) {
+<span class="nc" id="L174">    this.inventory = inventory;</span>
+<span class="nc" id="L175">  }</span>
+
+  public Product getProduct() {
+<span class="nc" id="L178">    return product;</span>
+  }
+
+  public void setProduct(Product product) {
+<span class="nc" id="L182">    this.product = product;</span>
+<span class="nc" id="L183">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
